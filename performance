@@ -1,0 +1,1 @@
+d2 $ fast 8 $ s "gtr" <| n (run 3) #speed 1  # gain 0.4 # room 0.3 # (ampbus 1 $ segment 512 $ fast 128 $ sine)

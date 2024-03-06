@@ -1,0 +1,86 @@
+import Sound.Tidal.Chords
+
+d1 $ note "0 2 4 7" # s "mydevice"
+
+d1 $ qtrigger $ chunk 4 (|- note 12) $ jux rev $ fast 1 $
+  arp "<pinkyup down thumbup up>" $ note ("<c'maj'4 e4'min'8 f4'maj'4>" + 3)
+  # sound "superhoover"
+  # sustain 2 # room 0.3 # sz 0.9 # speed 1 # gain 0.55 # accelerate "0" # pan saw  # verb 0.9 0.9 0.1 0.2
+  -- # tremolodepth 1 # tremolorate "4"
+  -- # lpfbus 1 (fast 1(range 100 10000 saw))
+
+d2 $ qtrigger $ jux rev $ sometimesBy 0.2 (# speed "-1") $ slow 8 $ striateBy 32 (1/8) $ sound "imogen" # n "1" # up "1"
+  -- # clouds 0.1 0.5 0.05 0.1
+  -- # cloudsblend 1 0.2 0.33 0.8
+  # verb 0.9 0.9 0.1 0.2
+  # (ampbus 1 $ segment 16 $ fast 4 $ sine) # gain 0.8
+
+d4 $ slow 2 $ ccv (segment 128 (range 1 127 sine)) # ccn "0" # s "midi"
+
+d4 $ ccv "0.4" # ccn "0" # s "midi"
+
+
+d4 $ slow 4 $ striate 32 $ s "vmemo" # begin 0 # end 0.2 # gain 1.3 # hpf 2000 # fshift "1" # fshiftnote "e5" # verb 0.9 0.9 0.1 0.2
+once $ s "vmemo" # begin 0.8 # end 1 # gain 1.5 # hpf 4000 # fshift "1" # fshiftnote "e5" # verb 0.9 0.9 0.1 0.2
+
+d2 $ qtrigger $ jux rev $ slow 8 $ striate 128 $ sound "imogen" # n "1" # up "1"  # verb 0.9 0.9 0.1 0.2
+
+scaleList
+
+d3 $ slow 2 $ jux rev  $ chunk 3 (|- note 5)  $ struct (fast 4 "[t(5,8)|t(3,8)]") $ note ((scale "majPent" "0 3 -3 2 -7 5")+3) # sound "gtr"
+  # lfo 1 # rate 1 # accelerate "0"
+  # gain (range 0.4 0.5 isaw) # room "0.6" # delay "0.5" # delayfb "0.5" # delaytime "0.5" # speed 1
+  -- # krush 4 # crush 4
+  -- # crush 1
+  # clouds 0.1 0.5 0.05 0.1
+  # cloudsblend 1 0.2 0.33 0.8
+  # verb 0.9 0.9 0.1 0.2
+  -- # (ampbus 4 $ segment 64 $ fast 4 $ saw)
+
+
+d7 $ silence
+
+do
+  -- d4 $ qtrigger $ fast 1 $ struct ("<[t t [f t]] [[f t] t f]>")$ "808cust" # krush 1 # gain (range 1.2 1.6 rand)
+  d7 $ qtrigger $ fast 1 $ struct ("<[t t [f t]] [[f t] t f]>")$ "808bd:4" # krush 4 # gain (range 1.2 1.4 rand)
+  -- d6 $ qtrigger $ fast 4 $ sometimesBy 1 (# gain "0") $ slow 1 $ struct ("<[[t|t!4] t [f t]] [[f t] [t|t!2] f]>")$ "sd:2" # gain 1 # room 0.5 # gain (range 0.8 1.1 rand)
+  d5 $ qtrigger $ fast 1 $ struct ("<[[t|t!4] t [f t]] [[f t] [t|t!2] f]>")$ "hh" # krush 4 # room 0.1 # gain (range 1 1.2 rand)
+
+d4 $ qtrigger $ slow 1 $ struct ("<[t t [f t]] [[f t] t f]>")$ note "[c4,c5,c6]"
+  # sound "superhoover" # attack 0.5 # release 0.1
+  # slide "0" # speed 1 # legato "1.5" # gain 2
+
+chordList
+
+do
+  d5 $ qtrigger $ fast 2 $ struct ("t t [f t f f] [t f f f]") $ s "hh" # krush 2 # cut 1
+
+
+d3 $ qtrigger $  fast 1  $ chunk 4 (|- note 5) $ juxBy 0.5 rev$
+  arp "<pinkyup down thumbup up>" $ note ("<c'maj'4 e4'min'8 f4'maj'4>" + 0)
+    # sound "supermandolin"
+    # sustain 2 # room 0.5 # sz 0.9 # speed 1 # gain 0.8 # krush 4 # tremolodepth 0.7 # tremolorate "<16>"
+
+
+
+d2 $ chunk 4 (|- note 5) $ jux rev $
+  arp "<pinkyup down thumbup up>" $ n "<c'maj'4 e4'min'8 f4'maj'4>"
+  # sound "superhoover"
+  # sustain 2 # room 0.3 # sz 0.5 # gain 0.7
+
+d2 $ n "c5 e5 e5 [g5 c4]" # s "hoover" # sustain 2 # accelerate "0" # speed 1
+
+once $ loopAt 8 $ chop 32 $ sound "scream:0" # begin 0.1 # end 0.13
+
+d3 $ slow 4 $ striate 32  $ sound "scream:0" # cut 1 # begin 0.1 # end 0.14 # note ("<c'maj'4>" - 12) # gain 0.95 # room 1
+
+d2 $ note " c d e f g" # s "midi"
+
+d1 $ ccv "127" # ccn 11 # s "midi"
+
+d1 $ n (slow 2 $ fmap (*7) $ run 8)
+  # s "supergong"
+  # decay "[1 0.2]/4"
+  # voice "[0.5 0]/8"
+
+  d1$ s "in" # pan 0.5

@@ -1,0 +1,86 @@
+-- d1 $ slow 4 $ s "808bd" <| n (run 25) # crush 5 # krush 4 # room 0.5-- 25 rather similar 808 kicks!
+-- d1 $ silence
+-- d2 $ shuffle 8 $ s "808*8" # note ((scale "pelog" "0 .. 7")+4) # room 0.4
+-- d2 $ fast 4 $ s "h" <| n "[4 2 <7,6> 1]" # speed "[0.5 | 0.25]" # krush (fast 2(range 0 5 saw)) # legato 1
+--
+-- d2 $ s "supersaw"  <| note ((scale "pelog" "-5 .. 5")+4) # room 0.4 # legato 1 # crush 4 # gain 0.7
+--
+-- setcps(0.7)
+-- d2 $ s "moog" <| note "c4 e4 g4 c4" # room 0.4 # cut 1
+--
+--
+-- d1 $ n (arpg "'sus4") # sound "superpiano"
+--
+-- -- We can make this more exciting by patterning the range:
+-- d3 $ fast 1.2 $ note ((scale "pelog" " -5 .. 2"))
+--   # sound "supersaw"
+--   # legato 1
+--   # voice 1
+--   # decay 2
+--   # lfo 1
+--   # krush 3
+--   # rate 2
+--   # pitch1 "0.5"
+--   # lpf 2000
+--   # lpq 0.2
+--
+-- d4 $ fast 4 $ "mcride" # n "<2!2 3!3 1!2 0!2>" # krush 2 # begin 0.2  # speed 1 # legato 2 # lpf (fast 1024(range 0 10000 saw)) # delay 0.1
+import Sound.Tidal.Chords
+
+d1 $ fast 1$ s "supersquare" >| note "<[a4 g4!7] [c5 b4!7] [e5 d5!7] [a5 g5!7]>" # krush 2 # speed 0.4 # pan 0.4
+d2 $  fast 1$ s "supersquare" >| note "[<c'maj e'min d'maj>+a5]!8" # krush 2 # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine # gain 1.1 # pan 0.6
+d3 $  fast 1$ s "supersquare" >| note "<c'maj e'min d'maj>!8" # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine # lpf 800 # lpq 0.2 # gain 1  # pan (fast 4(range 0.2 0.8 sine))
+d3 $  fast 2$ s "supersquare" >| note "[c'maj|e'min|d'maj|g'sus4]!4" # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine# lpf 800 # lpq 0.2 # gain 1  # pan (fast 4(range 0.2 0.8 sine))
+d7 $ silence
+
+-- d1 $  fast 2$ s "psr:1">| note (arp "updown" (scale "major" ("c'maj e'min d'maj") + "a6")) # krush 2 # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine # gain 1.5 # lpf 4000
+d2 $  fast 2$ s "supersquare">| note (arp "<up down diverge>" (scale "major" ("c'maj e'min d'maj")+"a7")) # krush 2 # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine
+d2 $  fast 2$ s "supersquare">|  n (arp "<up down diverge>" "<a'm9'8 e'7sus4'8>") # krush 2 # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine # gain 1.1
+scaleList
+
+d5 $ s "auto:4!4" # krush 8 # gain 1.1 # room 0.2 # cut 1
+
+
+d5 $ fast  2$ s "[jungbass:2!3] [auto:4!2] [sd:6!2] [auto:4!2]" # krush 8 # gain 1.1 # room 0.2
+
+d2 $ s "moog:4" # speed 0.8 # gain 1.2 # lpf 3000 # legato 2
+d3 $ silence
+d4 $ fast 8 $ s "[gabba:1 gabba:2]!2" # krush 8 # gain (range 1 1.5 saw)
+
+d8 $ ccv "<127 0 127 0>" # ccn "0" # s "midi"
+d9 $ rotL 1 $ ccv (segment 64 (range 127 0 saw)) # ccn "1"  # s "midi"
+d10 $ fast 4 $ ccv "<127 0 64 0>" # ccn "2" # s "midi"
+
+do
+d1 $ silence
+d5 $ silence
+d4 $ silence
+d3 $ silence
+d7 $ fast 1 $ "carly [carly!3]" # n 14 # speed "0.85" # room 0.5 # gain 1.2 # legato 0.75
+d2 $  fast 2$ s "supersquare">|  n (arp "<up down diverge>" "<a'm9'8 e'7sus4'8>") # krush 2 # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine # gain 1.1
+
+d3 $  fast 1$ s "supersquare" >| note "<c'maj e'min d'maj>!8" # speed 0.4 # voice (fast 1 (range 0 2 sine)) # lfo sine # lpf 800 # lpq 0.2 # gain 1  # pan (fast 4(range 0.2 0.8 sine))
+d1 $ fast 1$ s "supersquare" >| note "<[a4 g4!7] [c5 b4!7] [e5 d5!7] [a5 g5!7]>" # krush 2 # speed 0.4 # pan 0.4
+
+
+setcps (140/60/4)
+d4 $ s "breaks165" # krush 5 # speed 1 # gain 1.3-- one bar amen at 165
+d4 $ slow 2 $ s "amencutup" <| n (run 32) # speed 1 # krush 2 # gain 1.2
+
+d6 $ slow 2 $ "carly carly" # n 4 # speed 0.8 # room 0.5 # gain 1.2 # legato 1
+-- 7 : baby , 9 : take me, 14: runaway
+d6 $ fast 2 $ "carly [carly!3]" # n (slow 2 (run 15))  # speed 0.85 # room 0.5 # gain "1 1.4" # legato 1
+d6 $ silence
+d7 $ fast 1 $ "carly [carly!3]" # n 14 # speed "0.85" # room 0.5 # gain 1.2 # legato 0.75
+d7 $ slow 1 $ "carly _ _ _ _ [carly!3]" # n "<8!2 [12|13]!2>" # begin "<0.06!2 0!2>"   # speed 1.15 # gain "1.6" # legato 1.25
+d6 $ fast 1 $ "carly [carly!8]" # n 8  # speed 1.2 # room 0.5 # gain 1.1 # legato 1
+
+
+
+
+
+
+d4 $ fast 4 $  s "industrial" <| n (run 32) -- iya mix of metallic percussive sounds
+
+
+d4 $ fast 2 $ s "gab:6!2 gab:4 gab:6 [gabba:2 gabba:2]" # krush 4 # room 0.1
