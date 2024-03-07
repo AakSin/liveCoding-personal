@@ -4,16 +4,17 @@ precision mediump float;
 
 uniform float time;
 uniform vec2 resolution;
-uniform float c0;
-uniform float c1;
-uniform float c2;
+uniform float tubeDensity;
+uniform float parallaxFlip;
+uniform float tubeShaping;
+uniform float colorG;
+uniform float mistDensity;
 
 
 // Variables used to identify the objects. In this case, there are just two - the biotubes and
 // the tunnel walls.
 float objID = 0.; // Biotubes: 0, Tunnel walls: 1.
 float saveID = 0.;
-
 
 // Standard 1x1 hash functions. Using "cos" for non-zero origin result.
 float hash( float n ){ return fract(cos(n)*45758.5453); }
@@ -87,7 +88,12 @@ vec2 path(in float z){
 
     //MUSIC VAR POTENTIAL
     float a = sin(z * 0.11);
-    float b = cos(z * 0.14);
+   float flipS=parallaxFlip;
+   float b;
+
+   if(flipS==1.){b = tan(z * 0.14)/2.;}
+   else { b = cos(z * 0.14);}
+
     return vec2(a*4. - b*1.5, b*1.7 + a*1.5);
 }
 
@@ -122,7 +128,7 @@ float map(vec3 p){
 
   // Biotube lattice. The final time-based term makes is heave in and out.
   // HUGE HUGE MUSIC VARIABLE POTENTIAL - vartiable besides 3.14/Time, last variable, first variab;e
-    float bio = d + c0 +  dot(sin(p*1. + time/10.*3.14 + sin(p.yzx*.5)), vec3(0.6));
+    float bio = d + tubeDensity +  dot(sin(p*1. + time/2.*2. + sin(p.yzx*.5)), vec3(tubeShaping));
 
     // The tunnel. Created with a bit of trial and error. The smooth maximum against the gyroid rounds it off
     // a bit. The abs term at the end just adds some variation via the beveled edges. Also trial and error.
@@ -436,7 +442,7 @@ void main( void ){
             // Cheap, sinewy, vein-like covering. Smoothstepping Voronoi is the main mechanism involved.
             vec3 sps = sp/1.;
             float ct = cellTile(sps*2. + sin(sps*12.)*.5)*.55 + cellTile(sps*6. + sin(sps*36.)*.5)*.14;
-            texCol = vec3(.01, .01, .1)*(1.-smoothstep(-.1, .25, ct)) + vec3(0.01, 0.1, 0.2);
+            texCol = vec3(0.1, colorG, .24)*(1.-smoothstep(-.1, .25, ct)) + vec3(0.1, colorG, .24);
         }
 
 
@@ -468,7 +474,7 @@ void main( void ){
         // MUSIC VAR POTENTIAL
         sceneCol += texCol*vec3(.8, .55, 0.9)*pow(fre, 4.)*2.;
         //MUSIC VAR POTENTIAL
-        sceneCol += vec3(0.1, .1, .24)*trans*0.5;
+        sceneCol +=vec3(0.1, colorG, .24)*trans*0.5;
 
 
         // Fake reflection and refraction on the biotubes. Not a proper reflective and
@@ -497,7 +503,7 @@ void main( void ){
     // very basic, 8-layered smokey haze.
     float mist = getMist(camPos, rd, lightPos, t);
     // HUGE MUSIC VAR POTENTIAL
-   vec3 sky = vec3(0.1, .1, .24) * mix(1., .75, mist) *(rd.y*.25 + 10.);
+   vec3 sky = vec3(0.1, colorG, .24) * mix(1., .75, mist) *(rd.y*.25 + mistDensity);
     sceneCol = mix(sky, sceneCol, 1./(t*t/FAR/FAR*8. + 1.0));
 
     // Clamp and present the pixel to the screen.

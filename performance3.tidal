@@ -1,27 +1,89 @@
 import Sound.Tidal.Chords
 
-d1 $ note "0 2 4 7" # s "mydevice"
+do
+  once $ ccv 127 # ccn "0" # s "midi"
+  once $ ccv 30 # ccn "2" # s "midi"
+  once $ ccv "10" # ccn "3" # s "midi"
+  once $ ccv 10 # ccn "4" # s "midi"
+  once $ ccv "30" # ccn "5" # s "midi"
 
-d1 $ qtrigger $ chunk 4 (|- note 12) $ jux rev $ fast 1 $
+xfadeIn 2 4 $ qtrigger $ jux rev $ sometimesBy 0.2 (# speed "-1") $ slow 8 $ striateBy 32 (1/8) $ sound "imogen" # n "1" # up "1"
+  # verb 0.9 0.9 0.1 0.2
+  # clouds 0.1 0.5 0.1 0.1
+  # cloudsblend 1 0.2 0.33 0.8
+  -- # (ampbus 1 $ segment 16 $ fast 3 $ sine) # gain 0.8
+
+do
+  once $ ccv 57 # ccn "2" # s "midi"
+  d5 $ slow 4 $ ccv (segment 512 (range 127 1 sine)) # ccn "0" # s "midi"
+  d6 $ slow 4 $ ccv (segment 512 (range 30 5 sine)) # ccn "3" # s "midi"
+
+d1 $ qtrigger $ chunk 4 (|- note 12) $ jux rev $ slow 1 $
   arp "<pinkyup down thumbup up>" $ note ("<c'maj'4 e4'min'8 f4'maj'4>" + 3)
   # sound "superhoover"
-  # sustain 2 # room 0.3 # sz 0.9 # speed 1 # gain 0.55 # accelerate "0" # pan saw  # verb 0.9 0.9 0.1 0.2
-  -- # tremolodepth 1 # tremolorate "4"
-  -- # lpfbus 1 (fast 1(range 100 10000 saw))
+  # sustain 2 # room 0.3 # sz 0.9 # speed 1 # gain 0.4 # accelerate "0" # pan saw  # verb 0.9 0.9 0.1 0.2
+  -- # tremolodepth 1 # tremolorate "8"
+  -- # lpfbus 1 (slow 4(range 100 10000 saw))
 
-d2 $ qtrigger $ jux rev $ sometimesBy 0.2 (# speed "-1") $ slow 8 $ striateBy 32 (1/8) $ sound "imogen" # n "1" # up "1"
-  -- # clouds 0.1 0.5 0.05 0.1
-  -- # cloudsblend 1 0.2 0.33 0.8
+do
+  d5 $ silence
+  d6 $ silence
+  once $ ccv 127 # ccn "1" # s "midi"
+  once $ ccv 60 # ccn "2" # s "midi"
+  once $ ccv 37 # ccn "4" # s "midi"
+
+  once $ ccv 1 # ccn "0" # s "midi"
+  once $ ccv "20" # ccn "3" # s "midi"
+
+
+xfadeIn 3 8 $ slow 1 $ jux rev  $ chunk 3 (|- note 5)  $ struct (fast 4 "[t(5,8)|t(3,8)]") $ note ((scale "majPent" "0 3 -3 2 -7 5")+3) # sound "gtr"
+  # lfo 1 # rate 1 # accelerate "0"
+  # gain (range 0.45 0.55 isaw) # room "0.6" # delay "0.5" # delayfb "0.5" # delaytime "0.5" # speed 1
+  # krush 4 # crush 4
+  -- # crush 1
+  # clouds 0.1 0.5 0.05 0.1
+  # cloudsblend 1 0.2 0.33 0.8
   # verb 0.9 0.9 0.1 0.2
-  # (ampbus 1 $ segment 16 $ fast 4 $ sine) # gain 0.8
+  -- # (ampbus 4 $ segment 64 $ fast 4 $ saw)
 
-d4 $ slow 2 $ ccv (segment 128 (range 1 127 sine)) # ccn "0" # s "midi"
+do
+  once $ ccv "50" # ccn "5" # s "midi"
+  once $ ccv 90 # ccn "2" # s "midi"
+  once $ ccv 127 # ccn "0" # s "midi"
 
-d4 $ ccv "0.4" # ccn "0" # s "midi"
+xfadeIn 4 4 $ slow 4 $ striate 32 $ s "vmemo" # begin 0 # end 0.2 # gain 1 # hpf 2000 # fshift "1" # fshiftnote "e5" # verb 0.9 0.9 0.1 0.2
+once $ s "vmemo" # begin 0.8 # end 1 # gain 1.5 # hpf 3000 # fshift "1" # fshiftnote "e5" # verb 0.9 0.9 0.1 0.2
+
+do
+  once $ ccv 0 # ccn 0 # s "midi"
+  once $ ccv 0 # ccn "1" # s "midi"
+  once $ ccv 0 # ccn "2" # s "midi"
+  -- once $ ccv 10 # ccn "3" # s "midi"
+  once $ ccv 60 # ccn "5" # s "midi"
+
+d5 $ slow 8  $ ccv (segment 512 (range 0 127 sine)) # ccn "0" # s "midi"
+d4 $ slow 8 $ ccv (segment 512 (range 60 127 sine)) # ccn "5" # s "midi"
+d6 $ ccv 0 # ccn "6" # s "midi"
+
+d5 $ ccv 127 # ccn "0" # s "midi"
+d4 $ ccv 90 # ccn "5" # s "midi"
+d6 $ qtrigger $ filterWhen (>=0) $ slow 10 $ ccv (segment 64 (range 0 80 sine)) # ccn "6" # s "midi"
+
+d6 $ ccv 0 # ccn "6" # s "midi"
+
+do
+  once $ ccv 12 # ccn "4" # s "midi"
+  d5 $ ccv 0 # ccn "0" # s "midi"
+  once $ ccv "10" # ccn "3" # s "midi"
+  once $ ccv "126" # ccn "0" # s "midi"
+
+  once $ ccv 1 # ccn "1" # s "midi"
+  once $ ccv 127 # ccn "2" # s "midi"
+  once $ ccv "30" # ccn "5" # s "midi"
+
+d4 $ silence
 
 
-d4 $ slow 4 $ striate 32 $ s "vmemo" # begin 0 # end 0.2 # gain 1.3 # hpf 2000 # fshift "1" # fshiftnote "e5" # verb 0.9 0.9 0.1 0.2
-once $ s "vmemo" # begin 0.8 # end 1 # gain 1.5 # hpf 4000 # fshift "1" # fshiftnote "e5" # verb 0.9 0.9 0.1 0.2
 
 d2 $ qtrigger $ jux rev $ slow 8 $ striate 128 $ sound "imogen" # n "1" # up "1"  # verb 0.9 0.9 0.1 0.2
 
@@ -29,7 +91,7 @@ scaleList
 
 d3 $ slow 2 $ jux rev  $ chunk 3 (|- note 5)  $ struct (fast 4 "[t(5,8)|t(3,8)]") $ note ((scale "majPent" "0 3 -3 2 -7 5")+3) # sound "gtr"
   # lfo 1 # rate 1 # accelerate "0"
-  # gain (range 0.4 0.5 isaw) # room "0.6" # delay "0.5" # delayfb "0.5" # delaytime "0.5" # speed 1
+  # gain (range 0.45 0.55 isaw) # room "0.6" # delay "0.5" # delayfb "0.5" # delaytime "0.5" # speed 1
   -- # krush 4 # crush 4
   -- # crush 1
   # clouds 0.1 0.5 0.05 0.1

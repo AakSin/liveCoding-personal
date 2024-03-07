@@ -1,17 +1,7 @@
-s0.initVideo("https://cdn-cf-east.streamable.com/video/mp4/k58pxa.mp4?Expires=1708856653372&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ&Signature=epUyDhdWRKnaMEqeUc6qgbHI-jpaBrHxqJSgc5KfxFqZ2qS2k~y87Uw1W6Bs7CP67h6jhezGlgNi4GDNBda72vqiuoC91rPG1loRTRNiGdw~4vXxajDw8vgD9KMgCXMeJhA8MDkt0UaAfo6rcfc9D6mRmy~SLOTXcnbIMgE436lPHIyGtcDNYnocX5Q-HflaAdD-oMuYf846Q5WvhHB14O0N0Z9-51wmbk-RzTzeUnfeL3ol4yHEWRcGW54JgkFKvZ7YBixDwduQhkF9svHgj1sPUgVlBtqJbrUL6XqoH78sFSURguBcK9dPJMX0bU7fWjrXONTIUh0kllxnL4yyKg__")
+s0.initVideo("https://cdn-cf-east.streamable.com/video/mp4/nkoxge.mp4?Expires=1710008674297&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ&Signature=PzDFsxzxXfI8LoZxHTaSaqWpvFSXhvFF-k6yjAEmhIE0VzgCBvBsRzfkSHGDzFOdi-qOej3pFYK2j4~bVMaMsgtn7I7QqWocT6EDSO6u7w3MlQSl~aBUQ1XEeGGQZOIipWW5CIrtJ1OvFS3N~VRCmALpiqjx319KYFXgegrqxS7a4JT4GtkHRxWLSR7Q3tXiRbGzqtI7~iYpwegMcKFkIF0dwuH03IjB2fvEyYBZSfA1R2Oz9EwCCorG-lm0D9RE5G0n6BSyFrt22gsqyRufDM9iELlYtgoHGfy9WPFbiNyFquSSg7PgB0oxKaFDH0-L8F061WQPcnZS4DPjNPuJaQ__")
 src(s0).out(o0)
-render(o0)
-
-solid().out(o3)
-render(o0)
-//three values, two used for noise and added together, and the third for luma
-
 src(o0).modulateScale(osc(8,0.1)).out(o1)
-render(o1)
-
 src(o1).modulateScale(src(o0).luma(()=>(cc[0]))).hue(()=>(cc[1])).out(o2)
-render(o2)
-
 src(o3).modulateHue(o2,()=>(cc[2])*16).blend(o0,0.05).out(o3)
 render(o3)
 
