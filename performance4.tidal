@@ -1,0 +1,58 @@
+d1 $ rolledBy 1 $ note "<a'm9'8'd3 e'7sus4'8'd2 c'min9'i2>" # s "custgtr"
+
+d2  $ s "omi" <| note "a [~ g] [c b] [g gs]"
+    # octave "<3 4 5 6 7 8>"
+    # sustain "{1 2 1}%8"
+
+d1  $ s "braids" <| note "a [~ g] [c b] [g gs]"
+    # octave "<3 4 5 6 7 8>"
+    # sustain "{1 2 1}%8"
+    # model (slow 48 $ run 48)
+    # timbre (slow 3 sine)
+    # color (saw)
+
+once $ ccv 27 # ccn "3" # s "midi"
+once $ ccv 0 # ccn "0" # s "midi"
+once $ ccv 20 # ccn "1" # s "midi"
+once $ ccv 0 # ccn "2" # s "midi"
+
+d1  $ jux rev $ chunk 4 (fast 2 . (|- n 12)) $ off 0.25 (|+ 7) $ struct (iter 4 "t(5,8)")
+  $ n (scale "todi" "0 .. 7") # sound "sitar" # legato 0.5 # gain 1.2
+
+d2 $  sometimes  (# crush 2)  $ s "gabba*16" # n (run 3) # speed "1*14 -1*2" # gain 0.7 # room 1
+
+
+d4 $ silence
+-- 0 = tunnel shape, 1 = ribbon width, 2 =  ribbon curve, 3 = time
+once $ ccv "127" # ccn "1" # s "midi"
+d4 $ ccv "0 5 10 20" # ccn "0" # s "midi"
+d5 $ ccv  (segment 64 (range 127 1 sine))# ccn "2" # s "midi"
+d6 $ ccv  (segment 64 (range 127 1 sine))# ccn "1" # s "midi"
+
+
+d5 $ ccv  (segment 64 (range 127 1 sine))# ccn "2" # s "midi"
+d6 $ ccv  (segment 64 (range 127 1 sine))# ccn "1" # s "midi"
+
+d3 $ fast 16 $  s "ade" <| n (run 10) # cut 1-- various long samples
+
+d3 $ silence
+once $ ccv "20" # ccn "3" # s "midi"
+once $ sound "carcrash" # begin 0.1 # end 0.28 # fshift "0.1" # fshiftnote "e4" # lpf "5000"
+d4 $ slow 8 $ s "tacscan" <| n (run 22) # gain 2 -- game sounds, some long
+
+d4 $ sound "carcrash" # begin 0.25 # end 0.28 # cut 1 # fshift "0.1" # fshiftnote "e4" # lpf "5000"
+
+do
+  d1 $ jux rev $ chunk 4 (fast 2 . (|- n 12)) $ off 0.25 (|- 12) $ struct (iter 4 "t(5,8)")
+    $ n (scale "todi" "-5 .. 5") # sound "sitar" # legato 0.8 # gain 1.2 # speed "0.7" # krush 4
+  d2 $  sometimes  (# crush 2)  $ s "808oh:5*16" # n (run 3) # speed "1*14 -1*2" # gain 0.7 # room 1
+  d3 $ fast 2  $ struct (iter 4 "t(5,8)") $ s "hardkick" <| n (run 6) # lpf "3000"
+
+  once $ ccv "127" # ccn "3" # s "midi"
+  d4 $ ccv "0 5 10 20" # ccn "0" # s "midi"
+  d5 $ ccv  (segment 64 (range 127 1 sine))# ccn "2" # s "midi"
+  d6 $ ccv  (segment 64 (range 127 1 sine))# ccn "1" # s "midi"
+
+once $ s "carly:14"
+
+  scaleList
